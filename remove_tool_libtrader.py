@@ -18,21 +18,21 @@
 # You should have received a copy of the GNU General Public License
 # along with ELFRemove.  If not, see <http://www.gnu.org/licenses/>.
 
-import sys
-import os
 import argparse
-import shutil
 import logging
+import os
+import shutil
 import subprocess
+import sys
 import tempfile
 import time
 import traceback
 
 sys.path.append(os.path.join(os.path.abspath(os.path.dirname(__file__)), '../librarytrader'))
 
-from librarytrader.librarystore import LibraryStore
-from librarytrader.library import Library
 from elfremove.elfremove import ELFRemove
+from librarytrader.library import Library
+from librarytrader.librarystore import LibraryStore
 
 parser = argparse.ArgumentParser(description='Remove unneccessary symbols of given librarys.')
 parser.add_argument('json', help='the json file from libtrader')
@@ -113,7 +113,8 @@ def collect_exported_addrs(lib, blacklist):
     for key in lib.exported_addrs.keys():
         if key not in blacklist:
             value = lib.export_users[key]
-            if not value:
+            value_list = list(value)
+            if not value or (len(value_list) == 1 and value_list[0] == 'EXTERNAL'):
                 addr.add(key)
         else:
             print("In blacklist: " + str(key))
