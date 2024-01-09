@@ -18,24 +18,25 @@
 # You should have received a copy of the GNU General Public License
 # along with ELFRemove.  If not, see <http://www.gnu.org/licenses/>.
 
-import struct
-import collections
 import bisect
+import collections
 import logging
 import os
+import struct
 
 from elftools.common.exceptions import ELFError
-from elftools.elf.elffile import ELFFile
-from elftools.elf.sections import Section, SymbolTableSection
-from elftools.elf.relocation import RelocationSection
-from elftools.elf.dynamic import DynamicSegment
-from elftools.elf.hash import ELFHashTable, GNUHashTable
-from elftools.elf.enums import ENUM_RELOC_TYPE_x64, ENUM_RELOC_TYPE_i386, \
-    ENUM_DT_FLAGS, ENUM_DT_FLAGS_1
+from elftools.common.utils import parse_cstring_from_stream, struct_parse
 from elftools.elf.constants import SH_FLAGS
-from elftools.common.utils import struct_parse, parse_cstring_from_stream
-from elftools.elf.gnuversions import GNUVerNeedSection, GNUVerDefSection
+from elftools.elf.dynamic import DynamicSegment
+from elftools.elf.elffile import ELFFile
+from elftools.elf.enums import (ENUM_DT_FLAGS, ENUM_DT_FLAGS_1,
+                                ENUM_RELOC_TYPE_i386, ENUM_RELOC_TYPE_x64)
+from elftools.elf.gnuversions import GNUVerDefSection, GNUVerNeedSection
+from elftools.elf.hash import ELFHashTable, GNUHashTable
+from elftools.elf.relocation import RelocationSection
+from elftools.elf.sections import Section, SymbolTableSection
 from libdebuginfod import DebugInfoD
+
 
 class SectionWrapper:
 
