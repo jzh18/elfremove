@@ -276,6 +276,9 @@ def proc():
 
             collect_statistics(lib, elf_rem, lib.parse_time, lib.total_disas_time,
                                shrink_time, file_size, prev_dynsym_entries, stats_set)
+        except KeyError as e:
+            print("Caught KeyError!")
+            traceback.print_exc()
         except Exception as e:
             print("Caught exception!")
             traceback.print_exc()
